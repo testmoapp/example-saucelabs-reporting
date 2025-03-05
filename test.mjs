@@ -7,14 +7,14 @@ describe('search engine', async function () {
     let driver;
 
     // Make sure all required variables are set
-    before(async function() {
+    before(async function () {
         if (!process.env.SAUCE_USERNAME || !process.env.SAUCE_ACCESS_KEY) {
             throw new Error('Sauce Labs user name or access key not set')
         }
     });
 
     // Before each test, initialize Selenium and launch browser
-    beforeEach(async function() {
+    beforeEach(async function () {
         // We connect to Sauce Labs's Selenium service
         const server = process.env.SAUCE_URL ||
             'https://ondemand.us-west-1.saucelabs.com/wd/hub';
@@ -57,15 +57,14 @@ describe('search engine', async function () {
         // Automate DuckDuckGo search
         await driver.get('https://duckduckgo.com/');
         const searchBox = await driver.findElement(
-            By.id('search_form_input_homepage'));
+            By.id('searchbox_input'));
         await searchBox.sendKeys(term, Key.ENTER);
 
         // Wait until the result page is loaded
-        await driver.wait(until.elementLocated(By.css('#links .result')));
+        await driver.wait(until.elementLocated(By.css('#more-results')));
 
         // Return page content
-        const body = await driver.findElement(By.tagName('body'));
-        return await body.getText();
+        return await driver.getPageSource();
     };
 
     // Our test definitions

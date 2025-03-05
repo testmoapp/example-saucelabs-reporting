@@ -33,11 +33,11 @@ try {
     await driver.get('https://duckduckgo.com/');
 
     // Search for 'Selenium dev'
-    const searchBox = await driver.findElement(By.id('search_form_input_homepage'));
+    const searchBox = await driver.findElement(By.id('searchbox_input'));
     await searchBox.sendKeys('Selenium dev', Key.ENTER);
 
     // Wait until the result page is loaded
-    await driver.wait(until.elementLocated(By.css('#links .result')));
+    await driver.wait(until.elementLocated(By.css('#more-results')));
 } finally {
     // Close the browser
     await driver.quit();
